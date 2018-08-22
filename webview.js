@@ -9,6 +9,7 @@ var _electron = require('electron');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = Franz => {
+  // Regular expression for (*) or (1), will extract the asterisk or the number
   const titleRegEx = /^\(([\*\d])\)/;
   const getMessages = function unreadCount() {
     var directCount = 0;
