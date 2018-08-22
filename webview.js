@@ -9,13 +9,23 @@ var _electron = require('electron');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = Franz => {
-  const getMessages = function unreadCount() { 
-	const el = document.querySelector(".RIYDo");
-	
-	var count = el ? parseInt(el.textContent, 10) : 0 
-	
-	Franz.setBadge(count);
+  // Regular expression for (*) or (1), will extract the asterisk or the number
+  const titleRegEx = /^\(([\*\d])\)/;
+  const getMessages = function unreadCount() {
+    var directCount = 0;
+    var indirectCount = 0;
+
+    var matchArr = document.title.match(titleRegEx);
+    if (matchArr) {
+      if (matchArr[1] === '*') {
+        indirectCount = 1;
+      } else {
+        directCount = Number(matchArr[1]);
+      }
+    }
+
+    Franz.setBadge(directCount, indirectCount);
   }
-  
+
   Franz.loop(getMessages);
 };
